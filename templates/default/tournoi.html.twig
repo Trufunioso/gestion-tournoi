@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ dump(tournoi) }}
+{#<table class="table">
+    <thead>
+        <tr>
+            <th>Nom du tournoi</th>
+            <th>Ville</th>
+            <th>Date</th>
+            <th>Classé</th>
+            <th>Elo min</th>
+            <th>Elo max</th>
+            <th>Genre</th>
+            <th>Round</th>
+        </tr>
+    </thead>
+    {% for tournoi in tournois  %}
+        <tr>
+            <td>{{ tournoi.tournoi_name }}</td>
+        </tr>
+    {% endfor %}
+</table>#}
+{% endblock %}
+
+{% block title %}
+Tournois
+{% endblock %}
+

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Joueurs{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('player_add') }}" class="btn btn-dark mb-2">Nouveau joueur</a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Date de naissance</th>
+            <th>Elo</th>
+            <th>Genre</th>
+        </tr>
+        </thead>
+        {% for player in players  %}
+            <tr>
+                <td>{{ player.username }}</td>
+                <td>{{ player.birthdate | date('d-m-Y') }}</td>
+                <td>{{ player.elo }}</td>
+                <td>{{ player.gender }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

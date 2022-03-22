@@ -1,0 +1,25 @@
+{% set routeName = app.request.attributes.get('_route') %}
+<nav id="main-nav" class="open">
+    <ul>
+        <li class="{{ routeName == 'default_home' ? 'active' : '' }}">
+            <a href="{{ path('default_home') }}">
+                <i class="fa fa-home me-2"></i>Accueil
+            </a>
+        </li>
+        <li class="{{ routeName == 'default_tournament' ? 'active' : '' }}">
+            <a href="{{ path('default_tournament') }}">
+                <i class="fa-solid fa-chess me-2"></i>Tournois
+            </a>
+        </li>
+        <li class="{{ routeName == 'app_player' ? 'active' : '' }}">
+            <a href="{{ path('app_player') }}">
+                <i class="fa fa-users me-2"></i>Joueurs
+            </a>
+        </li>
+        {#<li class="{{ routeName == 'default_register' ? 'active' : '' }}">
+            <a href="{{ path('default_register') }}">
+                <i class="fa-solid fa-list-check me-2"></i>Enregistrement
+            </a>
+        </li>#}
+    </ul>
+</nav>
