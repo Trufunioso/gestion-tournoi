@@ -13,6 +13,7 @@
             <th>Date de naissance</th>
             <th>Elo</th>
             <th>Genre</th>
+            <th>Actions</th>
         </tr>
         </thead>
         {% for player in players  %}
@@ -21,6 +22,15 @@
                 <td>{{ player.birthdate | date('d-m-Y') }}</td>
                 <td>{{ player.elo }}</td>
                 <td>{{ player.gender }}</td>
+                <td><a href="{{ path('player_delete', { id: player.id }) }}"
+                       class="btn btn-sm btn-danger">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                    <a href="{{ path('player_edit', { id: player.id }) }}"
+                       class="btn btn-sm btn-primary">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
+                </td>
             </tr>
         {% endfor %}
     </table>
