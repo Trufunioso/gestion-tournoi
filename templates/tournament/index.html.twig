@@ -1,32 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <table class="table">
-    <thead>
-        <tr>
-            <th>Nom du tournoi</th>
-            <th>Ville</th>
-            <th>Date</th>
-            <th>Classé</th>
-            <th>Elo min</th>
-            <th>Elo max</th>
-            <th>Genre</th>
-            <th>Round</th>
-        </tr>
-    </thead>
-    {% for tournoi in tournois  %}
-        <tr>
-            <td>{{ tournoi.tournoiName }}</td>
-            <td>{{ tournoi.city }}</td>
-            <td>{{ tournoi.date | date('d-m-Y') }}</td>
-            <td>{{ tournoi.ranked }}</td>
-            <td>{{ tournoi.eloMin }}</td>
-            <td>{{ tournoi.eloMax }}</td>
-            <td>{{ tournoi.gender }}</td>
-            <td>{{ tournoi.round }}</td>
-        </tr>
-    {% endfor %}
-</table>
+
+
+
+    <div>
+        <h1>Liste des Tournois</h1>
+
+{#          {{  dump(tournois) }}#}
+
+        <div class="container">
+            <div class="row">
+                {% for tournoi in tournois %}
+    {# {{ dump(tournoi.players) }} #}
+                    <div class="col-sm-4">
+                        <div class="card" style="width: 18rem; margin-bottom: 20px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ tournoi.tournoiName }}</h5>
+                                <p class="card-text"><i class="fa-solid fa-location-dot"></i> {{ tournoi.city }}</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Date: {{ tournoi.date | date('d-m-Y')}} </li>
+                                {#{{ dump(tournoi.eloMin) }}
+                                {{ dump(tournoi.eloMax) }}#}
+                                <li class="list-group-item">{{ tournoi.eloMin }} pts - {{ tournoi.eloMax }} pts</li>
+                                <li class="list-group-item">Genre: {{ tournoi.gender }}</li>
+                                <li class="list-group-item">{{ tournoi.playerMin }} - {{ tournoi.PlayerMax }}</li>
+                            </ul>
+                            <div class="card-body">
+                                <button type="button" class="btn btn-primary">Informations</button>
+{#                                {{ dump(app.user.elo) }}#}
+                                <a type="submit" class="btn btn-success {% if app.user.elo < tournoi.eloMin or app.user.elo > tournoi.eloMax%} disabled {% endif %}" href="{{ path('participate', { id: tournoi.id}) }}">Participer</a>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block title %}

@@ -26,8 +26,8 @@ class PlayerController extends AbstractController
         ]);
     }
 
-    #[Route('/add', name: 'player_add')]
-    public function add(Request $request, EntityManagerInterface $em, PlayerRepository $repo)
+    #[Route('/addPlayer', name: 'player_add')]
+    public function addPlayer(Request $request, EntityManagerInterface $em)
     {
         $player = new Player();
         $form = $this->createForm(PlayerType::class, $player);

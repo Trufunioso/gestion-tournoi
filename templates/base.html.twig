@@ -19,12 +19,36 @@
                 Bruxelles Formation - Tournoi d'echecs
             </div>
             <div class="right">
-                <i class="fa fa-power-off"></i>
+                {% if app.user %}
+                    <a type="button" class="btn btn-danger" href="{{ path('app_logout') }}">Deconnexion</a>
+
+                {% else %}
+                    <a type="button" class="btn btn-success" href="{{ path('login') }}" >Connectez-vous</a>
+                {% endif %}
+
+
             </div>
         </header>
             <div class="flex-container">
                 {% include 'partials/menu.html.twig' %}
                 <main>
+                    {% for message in app.flashes('success') %}
+                        <div data-controller="toastr"
+                             data-message="{{ message }}"
+                             data-status="success"
+                        ></div>
+                        {#                    <div class="alert alert-success">#}
+                        {#                        {{ message }}#}
+                        {#                    </div>#}
+                    {% endfor %}
+                    {% for message in app.flashes('error') %}
+                        <div data-controller="toastr"
+                             data-message="{{ message }}"
+                             data-status="error"></div>
+                        {#  <div class="alert alert-danger">#}
+                        {#                        {{ message }}#}
+                        {#                    </div>#}
+                    {% endfor %}
                     {% block body %}{% endblock %}
                 </main>
             </div>

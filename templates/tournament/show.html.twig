@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>{{ tournoi.tournoiName }}</h2>
+
+    <p>Ville: {{ tournoi.city }}</p>
+    <p>Date: {{ tournoi.date | date('d-m-Y')}}</p>
+    <p>Joueurs: de {{ tournoi.playerMin }} a {{ tournoi.playerMax }}</p>
+    <p>Elo: de {{ tournoi.eloMin }} a {{ tournoi.eloMax }}</p>
+    {% for player in players  %}
+        <p>Participants: {{ player.username }}</p>
+    {% endfor %}
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

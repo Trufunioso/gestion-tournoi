@@ -3,10 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\PlayerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: PlayerRepository::class)]
-class Player
+#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+class Player implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,6 +39,45 @@ class Player
 
     #[ORM\Column(type: 'string', length: 255)]
     private $picture;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $password;
+
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Tournament', mappedBy: 'players')]
+    private $tournament;
+
+    public function __construct()
+    {
+        $this->tournament = new ArrayCollection();
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
+    }
+
+    /**
+     * @param mixed $tournament
+     * @return Player
+     */
+    public function setTournament($tournament)
+    {
+        $this->tournament = $tournament;
+        return $this;
+    }
+
+    /**
+     * @return string the hashed password for this user
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
 
     public function getId(): ?int
     {
@@ -128,4 +173,46 @@ class Player
 
         return $this;
     }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getRoles(): array
+    {
+        // TODO: Implement getRoles() method.
+        return [];
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        // TODO: Implement getUserIdentifier() method.
+        return (string) $this->username;
+    }
+
+    public function addTournament(Tournament $tournament): self
+    {
+        if (!$this->tournament->contains($tournament)) {
+            $this->tournament[] = $tournament;
+        }
+
+        return $this;
+    }
+
+    public function removeTournament(Tournament $tournament): self
+    {
+        $this->tournament->removeElement($tournament);
+
+        return $this;
+    }
+
+
 }

@@ -16,10 +16,15 @@
                 <i class="fa fa-users me-2"></i>Joueurs
             </a>
         </li>
-        {#<li class="{{ routeName == 'default_register' ? 'active' : '' }}">
-            <a href="{{ path('default_register') }}">
-                <i class="fa-solid fa-list-check me-2"></i>Enregistrement
-            </a>
-        </li>#}
+{#        <li class="{{ routeName == 'login' ? 'active' : '' }}">#}
+{#            <a href="{{ path('login') }}">#}
+{#                {% if app.user %}#}
+{#                    <i class="fa-solid fa-list-check me-2"></i>Logout#}
+{#                    {% else %}#}
+{#                        <i class="fa-solid fa-list-check me-2"></i>Login#}
+{#                {% endif %}#}
+
+{#            </a>#}
+{#        </li>#}
     </ul>
 </nav>

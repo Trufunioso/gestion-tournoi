@@ -2,46 +2,52 @@
 
 namespace App\Form;
 
-use App\Entity\Player;
+use App\Entity\Tournament;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\DataTransformer\BooleanToStringTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
 
-class PlayerEditType extends AbstractType
+class TournamentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username', TextType::class, [
+            ->add('tournoiName', TextType::class, [
                 'label_attr' => ['class' => 'form-label'],
                 'required' => true,
                 'attr' => ['class' => 'form-control']
             ])
-            ->add('firstname', TextType::class, [
+            ->add('city', TextType::class, [
                 'label_attr' => ['class' => 'form-label'],
                 'required' => true,
                 'attr' => ['class' => 'form-control']
             ])
-            ->add('lastname', TextType::class, [
-                'label_attr' => ['class' => 'form-label'],
-                'required' => true,
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('birthdate', BirthdayType::class, [
+            ->add('date', DateType::class, [
                 'widget' => 'single_text',
-                // this is actually the default format for single_text
-                'format' => 'yyyy-MM-dd',
                 'label_attr' => ['class' => 'form-label'],
                 'required' => true,
                 'attr' => ['class' => 'form-control']
             ])
-            ->add('elo', IntegerType::class, [
+            ->add('ranked', ChoiceType::class, [
+                'choices' => [
+                  'oui' =>  true,
+                  'non' => false
+                ],
+                'label_attr' => ['class' => 'form-label'],
+                'required' => true,
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('eloMin', IntegerType::class, [
+                'label_attr' => ['class' => 'form-label'],
+                'required' => true,
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('eloMax', IntegerType::class, [
                 'label_attr' => ['class' => 'form-label'],
                 'required' => true,
                 'attr' => ['class' => 'form-control']
@@ -49,17 +55,26 @@ class PlayerEditType extends AbstractType
             ->add('gender', ChoiceType::class, [
                 'choices' => [
                     'Homme' => 'H',
-                    'Femme' => 'F'
-                ],
+                    'Femme' => 'F',
+                    'Mixte' => 'M'
+            ],
                 'label_attr' => ['class' => 'form-label'],
                 'required' => true,
                 'attr' => ['class' => 'form-control']
             ])
-            ->add('picture', FileType::class, [
-                'data_class' => null,
-                'constraints' => [
-                    new File(['maxSize' => '2m'])
-                ],
+            ->add('round', IntegerType::class, [
+                'label_attr' => ['class' => 'form-label'],
+                'required' => true,
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('playerMin', IntegerType::class, [
+                'label_attr' => ['class' => 'form-label'],
+                'required' => true,
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('playerMax', IntegerType::class, [
+                'label_attr' => ['class' => 'form-label'],
+                'required' => true,
                 'attr' => ['class' => 'form-control']
             ])
         ;
@@ -68,7 +83,7 @@ class PlayerEditType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Player::class,
+            'data_class' => Tournament::class,
         ]);
     }
 }

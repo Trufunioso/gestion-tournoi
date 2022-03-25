@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TournamentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TournamentRepository::class)]
@@ -42,6 +44,32 @@ class Tournament
 
     #[ORM\Column(type: 'integer')]
     private $playerMax;
+
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Player', inversedBy: 'tournament')]
+    private $players;
+
+    public function __construct()
+    {
+        $this->players = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlayers()
+    {
+        return $this->players;
+    }
+
+    /**
+     * @param mixed $players
+     * @return Tournament
+     */
+    public function setPlayers($players)
+    {
+        $this->players = $players;
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -167,4 +195,21 @@ class Tournament
 
         return $this;
     }
+
+    public function addPlayer(Player $player): self
+    {
+        if (!$this->players->contains($player)) {
+            $this->players[] = $player;
+        }
+
+        return $this;
+    }
+
+    public function removePlayer(Player $player): self
+    {
+        $this->players->removeElement($player);
+
+        return $this;
+    }
+
 }

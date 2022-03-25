@@ -5,7 +5,6 @@
 {% block body %}
 
     <a href="{{ path('player_add') }}" class="btn btn-dark mb-2">Nouveau joueur</a>
-
     <table class="table">
         <thead>
         <tr>
@@ -17,6 +16,7 @@
         </tr>
         </thead>
         {% for player in players  %}
+            {{ dump(player.tournament) }}
             <tr>
                 <td>{{ player.username }}</td>
                 <td>{{ player.birthdate | date('d-m-Y') }}</td>

@@ -73,4 +73,21 @@ class TournamentRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findAllWithPlayers()
+    {
+        return $this->createQueryBuilder('t')
+            ->leftJoin('t.players', 'p')
+            ->addSelect('p')
+            ->getQuery()->getResult();
+    }
+
+    public function findWithPlayers($id)
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.id = :p1')
+            ->setParameter('p1', $id)
+            ->leftJoin('t.players', 'p')
+            ->addSelect('p')
+            ->getQuery()->getOneOrNullResult();
+    }
 }
